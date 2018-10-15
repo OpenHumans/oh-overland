@@ -1,6 +1,8 @@
 import requests
 from openhumans.models import OpenHumansMember
 from celery import shared_task
+import tempfile
+import json
 
 
 @shared_task(bind=True)
@@ -16,11 +18,15 @@ def process_batch(fname, oh_id):
     if 'locations' in batch.keys():
         data += batch['locations']
         oh_member.delete_single_file(file_basename='overland-data.json')
-        oh_member.upload(
-            stream=data, filename='overland-data.json',
-            metadata={
-                'description': 'Summed Overland GPS data',
-                'tags': ['GPS', 'location', 'json', 'processed']})
+        with tempfile.TemporaryFile('w') as out:
+            json.dump(data, out)
+            out.flush()
+            out.seek(0)
+            oh_member.upload(
+                stream=out, filename='overland-data.json',
+                metadata={
+                    'description': 'Summed Overland GPS data',
+                    'tags': ['GPS', 'location', 'json', 'processed']})
         oh_member.delete_single_file(file_basename=fname)
 
 
