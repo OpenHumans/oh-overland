@@ -1,7 +1,6 @@
 import requests
 from openhumans.models import OpenHumansMember
 from celery import shared_task
-from ohapi import api
 
 
 @shared_task(bind=True)
