@@ -18,12 +18,12 @@ def process_batch(fname, oh_id):
     if 'locations' in batch.keys():
         data += batch['locations']
         oh_member.delete_single_file(file_basename='overland-data.json')
-        with tempfile.TemporaryFile('w') as out:
+        with tempfile.NamedTemporaryFile('w') as out:
             json.dump(data, out)
             out.flush()
             out.seek(0)
             oh_member.upload(
-                stream=out, filename='overland-data.json',
+                stream=out.name, filename='overland-data.json',
                 metadata={
                     'description': 'Summed Overland GPS data',
                     'tags': ['GPS', 'location', 'json', 'processed']})
