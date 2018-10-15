@@ -9,7 +9,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         oh_members = OpenHumansMember.objects.all()
         for oh_member in oh_members:
-            files = oh_members.list_files()
+            files = oh_member.list_files()
             batches = []
             for f in files:
                 if f['basename'].startswith('overland-batch-'):
