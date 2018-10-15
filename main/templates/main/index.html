@@ -2,7 +2,7 @@
 
 {% block main %}
 
-<h1 class="mt-5">Open Humans Template</h1>
+<h1 class="mt-5">Overland Upload</h1>
 
 {% if not request.user.is_authenticated %}
 <p>
@@ -18,6 +18,14 @@
 <p>
   To push data you need to give Overland the following URL:<br>
   <pre>{{ overland_endpoint }}</pre>
+
+  <div id="qrcode"></div>
+  <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
+  <script type="text/javascript">
+    new QRCode(document.getElementById("qrcode"), "{{ overland_endpoint }}");
+  </script>
+
+  You can scan the QR code above with your iPhone to open a URL with further details right on your phone.
 </p>
 {% endif %}
 
