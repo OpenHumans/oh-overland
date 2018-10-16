@@ -33,10 +33,20 @@ def index(request):
 
     context = {'auth_url': auth_url}
     if request.user.is_authenticated:
+        context['overland_file'] = get_overland_file(
+            request.user.openhumansmember)
         context['overland_endpoint'] = urllib.parse.urljoin(
             settings.OPENHUMANS_APP_BASE_URL,
             request.user.openhumansmember.overlanduser.endpoint_token+"/")
     return render(request, 'main/index.html', context=context)
+
+
+def get_overland_file(oh_member):
+    files = oh_member.list_files()
+    for f in files:
+        if f['basename'] == 'overland-data.json':
+            return f['download_url']
+    return None
 
 
 def about(request):

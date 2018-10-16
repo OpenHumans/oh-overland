@@ -26,12 +26,19 @@
   </div>
 </div>
 {% else %}
-<h2>
-  You are logged in!
-</h2>
 
 <div class="row">
   <div class="col-md">
+    <h3>Your Overland data</h3>
+    {%if overland_file%}
+    <p>You already have Overland Location Data in your Open Humans account</p>
+    <a href="{{ overland_file }}" class="btn btn-primary">
+      Download your Data
+    </a>
+    {%else%}
+    <p>You don't have any Overland data in your Open Humans account so far.
+      Follow the steps below to start recording data:</p>
+    {%endif%}
     <p>
       To push data from the <i>Overland</i> app on your phone to <i>Open Humans</i> you need to use the following URL as the <i>Receiver Endpoint</i> in the <i>Overland</i>:<br>
       <code name='overland_url'>{{ overland_endpoint }}</code>
