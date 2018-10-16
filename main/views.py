@@ -39,6 +39,13 @@ def index(request):
     return render(request, 'main/index.html', context=context)
 
 
+def about(request):
+    """
+    give FAQ and further details on the app
+    """
+    return render(request, 'main/about.html')
+
+
 def logout_user(request):
     """
     Logout user
