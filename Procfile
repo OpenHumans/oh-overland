@@ -1,3 +1,3 @@
 release: python manage.py migrate
 web: gunicorn oh_template.wsgi --log-file=-
-worker: celery worker -A oh_template --concurrency 1
+worker: celery -A oh_template worker --concurrency 1
